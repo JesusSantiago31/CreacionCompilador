@@ -23,67 +23,69 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jButton1 = new CustomButton("Borrar");
         jButton2 = new CustomButton("Salir");
 
+        // Crear un panel para el fondo negro
+        JPanel topPanel = new JPanel();
+        topPanel.setBackground(Color.BLACK);
+        JPanel bottomPanel = new JPanel();
+        bottomPanel.setBackground(Color.BLACK);
+        
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setBackground(Color.WHITE); // Fondo blanco
 
         // Configurar el JTextField
         txtEntrada.setBackground(Color.WHITE); // Fondo blanco
-        txtEntrada.setBorder(BorderFactory.createLineBorder(new Color(63,81,181), 2)); // Borde azul (#2596be)
+        txtEntrada.setBorder(BorderFactory.createLineBorder(new Color(63,81,181), 2)); // Borde azul
         txtEntrada.setFont(new Font("Tahoma", 0, 30));
 
         // Configurar el JTextArea
         txtResultado.setBackground(Color.WHITE); // Fondo blanco
-        txtResultado.setBorder(BorderFactory.createLineBorder(new Color(63,81,181), 2)); // Borde azul (#2596be)
+        txtResultado.setBorder(BorderFactory.createLineBorder(new Color(63,81,181), 2)); // Borde azul
         txtResultado.setColumns(20);
         txtResultado.setRows(5);
         jScrollPane1.setViewportView(txtResultado);
 
-        btnAnalizar.setFont(new Font("Tahoma", Font.BOLD, 16)); // Tamaño de letra más pequeño
-        jButton1.setFont(new Font("Tahoma", Font.BOLD, 16)); // Tamaño de letra más pequeño
-        jButton2.setFont(new Font("Tahoma", Font.BOLD, 16)); // Tamaño de letra más pequeño
+        btnAnalizar.setFont(new Font("Tahoma", Font.BOLD, 16));
+        jButton1.setFont(new Font("Tahoma", Font.BOLD, 16));
+        jButton2.setFont(new Font("Tahoma", Font.BOLD, 16));
 
         // Agregar ActionListener a los botones
         btnAnalizar.addActionListener(evt -> btnAnalizarActionPerformed(evt));
         jButton1.addActionListener(evt -> jButton1ActionPerformed(evt));
         jButton2.addActionListener(evt -> jButton2ActionPerformed(evt));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnAnalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(txtEntrada)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(75, 75, 75)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 377, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 485, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(16, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(txtEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAnalizar)
-                    .addComponent(jButton1))
-                .addGap(18, 18, 18)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(18, Short.MAX_VALUE))
-        );
+        // Establecer layout del panel superior
+        topPanel.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.weightx = 1.0;
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        topPanel.add(txtEntrada, gbc);
+        
+        // Configurar insets para los márgenes de los botones
+        gbc.insets = new Insets(0, 10, 0, 10); // Margen horizontal entre botones
+        gbc.weightx = 0.0; // No expandir
+        gbc.gridx = 1; // Botón Analizar
+        topPanel.add(btnAnalizar, gbc);
+        
+        gbc.gridx = 2; // Botón Borrar
+        topPanel.add(jButton1, gbc);
+        
+        gbc.gridx = 3; // Botón Salir
+        topPanel.add(jButton2, gbc);
+
+        // Establecer layout de la ventana principal
+        getContentPane().setLayout(new BorderLayout());
+        getContentPane().add(topPanel, BorderLayout.NORTH); // Panel superior
+        getContentPane().add(jScrollPane1, BorderLayout.CENTER); // Panel central con el JTextArea
+        getContentPane().add(bottomPanel, BorderLayout.SOUTH); // Panel inferior
+
+        // Aumentar el margen superior y inferior
+        topPanel.setPreferredSize(new Dimension(0, 70)); // Aumentar el tamaño del panel superior
+        bottomPanel.setPreferredSize(new Dimension(0, 40)); // Aumentar el tamaño del panel inferior
+
+        // Establecer tamaño de la ventana
+        setSize(800, 500); // Tamaño más grande de la ventana
 
         pack();
     }
